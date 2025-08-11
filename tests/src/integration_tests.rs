@@ -12,14 +12,14 @@ mod tests {
 
     const VALUE: &str = "hello world";
     const RUNTIME_ARG_NAME: &str = "message";
-    const CONTRACT_WASM: &str = "contract.wasm";
+    const CONTRACT_WASM: &str = "contract.wasm"; // this contract src
 
-    const CONTRACT_CEP18_WASM: &str = "cep18.wasm";
-    const CONTRACT_TEST_WASM: &str = "cep18_test_contract.wasm";
+    const CONTRACT_CEP18_WASM: &str = "cep18.wasm"; // cep18
+    const CONTRACT_TEST_WASM: &str = "cep18_test_contract.wasm"; // cep18 test contract
 
     #[test]
     fn should_exec_two_wasm_test() {
-        let chainspec = ChainspecConfig::default().with_enable_addressable_entity(true);
+        let chainspec = ChainspecConfig::default().with_enable_addressable_entity(true); // false makes test succeed
 
         let mut builder = LmdbWasmTestBuilder::new_temporary_with_config(chainspec);
         builder
@@ -36,7 +36,7 @@ mod tests {
 
         let install_request_2 = ExecuteRequestBuilder::standard(
             *DEFAULT_ACCOUNT_ADDR,
-            CONTRACT_TEST_WASM,
+            CONTRACT_WASM,
             RuntimeArgs::default(),
         )
         .build();
@@ -52,7 +52,7 @@ mod tests {
     }
 
     #[test]
-    fn should_exec_two_wasm_test_same_wasm() {
+    fn should_exec_two_wasm_test_same_test_wasm() {
         let chainspec = ChainspecConfig::default().with_enable_addressable_entity(true);
 
         let mut builder = LmdbWasmTestBuilder::new_temporary_with_config(chainspec);
@@ -89,7 +89,7 @@ mod tests {
     }
 
     #[test]
-    fn should_exec_two_wasm_without_error() {
+    fn should_exec_two_wasm_with_error() {
         let chainspec = ChainspecConfig::default().with_enable_addressable_entity(true);
 
         let mut builder = LmdbWasmTestBuilder::new_temporary_with_config(chainspec);

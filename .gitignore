@@ -108,5 +108,3 @@ node_modules/
 
 # client output
 dist
-
-tests/wasm
