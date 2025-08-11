@@ -21,16 +21,16 @@ pub extern "C" fn call() {
     // let (contract_hash, _version) = storage::new_contract(
     //     entry_points,
     //     Some(named_keys),
-    //     Some("testing_contract".to_string()),
     //     Some("testing_contract_package".to_string()),
+    //     Some("testing_contract_access".to_string()),
     //     Some(message_topics),
     // );
 
     // let (contract_hash, _version) = storage::new_contract(
     //     entry_points,
     //     None,
-    //     Some("testing_contract".to_string()),
     //     Some("testing_contract_package".to_string()),
+    //     Some("testing_contract_access".to_string()),
     //     None,
     // );
 
