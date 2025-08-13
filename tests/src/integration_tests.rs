@@ -5,8 +5,8 @@ fn main() {
 #[cfg(test)]
 mod tests {
     use casper_engine_test_support::{
-        utils::create_run_genesis_request, ChainspecConfig, ExecuteRequestBuilder,
-        LmdbWasmTestBuilder, DEFAULT_ACCOUNTS, DEFAULT_ACCOUNT_ADDR,
+        utils::create_run_genesis_request_with_chainspec_config, ChainspecConfig,
+        ExecuteRequestBuilder, LmdbWasmTestBuilder, DEFAULT_ACCOUNTS, DEFAULT_ACCOUNT_ADDR,
     };
     use casper_types::{runtime_args, RuntimeArgs, U256};
 
@@ -21,9 +21,12 @@ mod tests {
     fn should_exec_two_wasm_test() {
         let chainspec = ChainspecConfig::default().with_enable_addressable_entity(true); // false makes test succeed
 
-        let mut builder = LmdbWasmTestBuilder::new_temporary_with_config(chainspec);
+        let mut builder = LmdbWasmTestBuilder::new_temporary_with_config(chainspec.clone());
         builder
-            .run_genesis(create_run_genesis_request(DEFAULT_ACCOUNTS.to_vec()))
+            .run_genesis(create_run_genesis_request_with_chainspec_config(
+                DEFAULT_ACCOUNTS.to_vec(),
+                chainspec,
+            ))
             .commit();
 
         let session_args = runtime_args! {
@@ -42,6 +45,7 @@ mod tests {
         .build();
 
         builder.exec(install_request_1).expect_success().commit();
+
         builder.exec(install_request_2).expect_success().commit();
 
         let account = builder
@@ -55,9 +59,12 @@ mod tests {
     fn should_exec_two_wasm_test_same_test_wasm() {
         let chainspec = ChainspecConfig::default().with_enable_addressable_entity(true);
 
-        let mut builder = LmdbWasmTestBuilder::new_temporary_with_config(chainspec);
+        let mut builder = LmdbWasmTestBuilder::new_temporary_with_config(chainspec.clone());
         builder
-            .run_genesis(create_run_genesis_request(DEFAULT_ACCOUNTS.to_vec()))
+            .run_genesis(create_run_genesis_request_with_chainspec_config(
+                DEFAULT_ACCOUNTS.to_vec(),
+                chainspec,
+            ))
             .commit();
 
         let session_args = runtime_args! {
@@ -92,9 +99,12 @@ mod tests {
     fn should_exec_two_wasm_with_error() {
         let chainspec = ChainspecConfig::default().with_enable_addressable_entity(true);
 
-        let mut builder = LmdbWasmTestBuilder::new_temporary_with_config(chainspec);
+        let mut builder = LmdbWasmTestBuilder::new_temporary_with_config(chainspec.clone());
         builder
-            .run_genesis(create_run_genesis_request(DEFAULT_ACCOUNTS.to_vec()))
+            .run_genesis(create_run_genesis_request_with_chainspec_config(
+                DEFAULT_ACCOUNTS.to_vec(),
+                chainspec,
+            ))
             .commit();
 
         let session_args = runtime_args! {
@@ -134,9 +144,12 @@ mod tests {
     fn should_exec_two_wasm_without_error_two_cep() {
         let chainspec = ChainspecConfig::default().with_enable_addressable_entity(true);
 
-        let mut builder = LmdbWasmTestBuilder::new_temporary_with_config(chainspec);
+        let mut builder = LmdbWasmTestBuilder::new_temporary_with_config(chainspec.clone());
         builder
-            .run_genesis(create_run_genesis_request(DEFAULT_ACCOUNTS.to_vec()))
+            .run_genesis(create_run_genesis_request_with_chainspec_config(
+                DEFAULT_ACCOUNTS.to_vec(),
+                chainspec,
+            ))
             .commit();
 
         let session_args = runtime_args! {
